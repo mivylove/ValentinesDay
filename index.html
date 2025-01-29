@@ -84,34 +84,33 @@
       }
     });
   
-  yesButton.addEventListener('click', () => {
-  imageDisplay.src = './images/image7.gif'; // Change to image7.gif
-  valentineQuestion.textContent = "Yayyy!! :3"; // Change the question text
-  responseButtons.style.display = 'none'; // Hide both buttons
-  confetti(); // Trigger confetti animation
+    yesButton.addEventListener('click', () => {
+      imageDisplay.src = './images/image7.gif'; // Change to image7.gif
+      valentineQuestion.textContent = "Yayyy!! :3"; // Change the question text
+      responseButtons.style.display = 'none'; // Hide both buttons
+      confetti(); // Trigger confetti animation
 
-  // Call the AWS API Gateway endpoint
-  fetch('https://5dxanvq1va.execute-api.ap-south-1.amazonaws.com/prod', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*', // Ensure CORS allows this request
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-  },
-  body: JSON.stringify({
-    phone_number: "+916396732226", // Ensure E.164 format
-    message: "Yayyy! They said YES! ❤️"
-  }),
-  mode: 'cors'
-})
-  .then(response => response.text()) // Handle text response properly
-  .then(data => console.log('Message sent:', data))
-  .catch(error => console.error('Error:', error));
-});
-
-
-
+      // Call the AWS API Gateway endpoint
+      fetch('https://5dxanvq1va.execute-api.ap-south-1.amazonaws.com/prod', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          phone_number: "+916396732226", // Ensure E.164 format
+          message: "Yayyy! They said YES! ❤️"
+        }),
+        mode: 'cors' // Ensure this allows cross-origin requests
+      })
+      .then(response => {
+        if (!response.ok) { // Check if the response is not OK
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => console.log('Message sent:', data))
+      .catch(error => console.error('Error:', error));
+    });
   </script>  
 </body>
 </html>
