@@ -92,17 +92,19 @@
 
   // Call the AWS API Gateway endpoint
   fetch('https://5dxanvq1va.execute-api.ap-south-1.amazonaws.com/prod', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*' // Ensure it matches with the API Gateway CORS settings
-    },
-    body: JSON.stringify({ 
-      phone_number: "+916396732226", // Ensure E.164 format
-      message: "Yayyy! They said YES! ❤️" 
-    }),
-    mode: 'cors'
-  })
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*', // Ensure CORS allows this request
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+  },
+  body: JSON.stringify({
+    phone_number: "+916396732226", // Ensure E.164 format
+    message: "Yayyy! They said YES! ❤️"
+  }),
+  mode: 'cors'
+})
   .then(response => response.text()) // Handle text response properly
   .then(data => console.log('Message sent:', data))
   .catch(error => console.error('Error:', error));
